@@ -27,4 +27,4 @@ async function userEvaluateUser(req, res) {
 
 module.exports = {
     userEvaluateUser
-}
+};
