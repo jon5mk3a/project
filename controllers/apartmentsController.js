@@ -3,8 +3,8 @@ const { dataBase } = require('../infraestructure');
 
 async function getApartments(req, res) {
     try {
-        const [apartments] = await dataBase.pool.query('SELECT * FROM apartment');
-        res.send(apartments);
+        const [apartment] = await dataBase.pool.query('SELECT * FROM apartment');
+        res.send(apartment);
     } catch (err) {
         res.status(500);
         res.send({ error: err.message });
@@ -45,9 +45,9 @@ async function createApartment(req, res) {
 
         const query = 'SELECT * FROM apartment WHERE location = ?';
         
-        const [apartments] = await dataBase.pool.query(query, location);
+        const [apartment] = await dataBase.pool.query(query, location);
 
-        if (apartments.length) {
+        if (apartment.length) {
             const err = new Error('Already exist an apartment with that location');
             err.code = 409;
             throw err;
@@ -82,10 +82,10 @@ async function searchApartment(req, res) {
             roomsNumber: joi.number().required(),
             date: joi.date().required()
         });
-        
+
         await schema.validateAsync({ location, price, roomsNumber, date, id });
         
-        const selectQuery = ('SELECT id FROM apartments WHERE location = ?, price = ?, roomsNumber = ?, date = ?');
+        const selectQuery = ('SELECT id FROM apartment WHERE location = ?, price = ?, roomsNumber = ?, date = ?');
         
         const [selectRows] = await dataBase.pool.query(selectQuery, id)
 
