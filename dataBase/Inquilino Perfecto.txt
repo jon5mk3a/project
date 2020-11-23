@@ -1,0 +1,5 @@
+user (#id, photo, name, surname, address, phone, email, nick_name, password, information)
+apartment (#id, photo, location, rooms, bathroom, lift, balcony, heating, furniture, internet, tv, price)
+user_apartment_request (#id, -id_user, -id_apartment)
+user_rent_book (#id, -id_user, -id_apartment, date, available)
+user_user_evaluate (#id, -id_user, -id_user_evaluate, text, rating)
