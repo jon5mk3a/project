@@ -85,7 +85,7 @@ async function searchApartment(req, res) {
 
         await schema.validateAsync({ location, price, roomsNumber, date, id });
         
-        const selectQuery = ('SELECT id FROM apartment WHERE location = ?, price = ?, roomsNumber = ?, date = ?');
+        const selectQuery = ('SELECT id FROM apartment WHERE location = ? OR price = ? OR roomsNumber = ? OR date = ?');
         
         const [selectRows] = await dataBase.pool.query(selectQuery, id)
 
