@@ -3,10 +3,10 @@ const { dataBase } = require('../infraestructure');
 
 async function getApartments(req, res) {
     try {
-        const [apartment] = await dataBase.pool.query('SELECT * FROM apartment');
-        res.send(apartment);
+        const [apartments] = await dataBase.pool.query('SELECT * FROM apartment');
+        res.send(apartments);
     } catch (err) {
-        res.status(500);
+        res.status(err.code || 500);
         res.send({ error: err.message });
     };
 };
