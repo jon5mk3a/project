@@ -5,8 +5,6 @@ const jwt = require('jsonwebtoken');
 const { dataBase } = require('../infraestructure');
 const { validateAuthorization } = require('../middlewares/validateAuth');
 
-module.import = { validateAuthorization };
-
 async function getUsers(req, res) {
     try {
         const [users] = await dataBase.pool.query('SELECT * FROM user');
@@ -47,7 +45,7 @@ async function createUser(req, res) {
         await userSchema.validateAsync({ photo, name, surname, address, photo, phone, email, nickName, password, information });
 
         const query = 'SELECT * FROM user WHERE email =?';
-        const [users] = await dataBase.pool.query(query, [email]);
+        const [users] = await dataBase.pool.query(query, email);
 
         if (users.length) {
             const err = new Error('Already exist an user with that email');
@@ -99,7 +97,7 @@ async function login(req, res) {
 
         if (!rows || !rows.length) {
             const error = new Error('That user do not exist');
-            error.code = 404;
+            error.code = 401;
             throw error;
         };
 
@@ -117,7 +115,7 @@ async function login(req, res) {
 
         const token = jwt.sign(tokenPayload, process.env.JWT_SECRET, { expiresIn: '1d' });
 
-        res.send({ token });
+        res.header({ Authorization: 'Bearer ' + token }).send({ token });
 
     } catch (err) {
         res.status(err.code || 500);
@@ -128,6 +126,7 @@ async function login(req, res) {
 async function editUser(req, res) {
     try {
         const { id } = req.params;
+        
         const {
             photo,
             name,
