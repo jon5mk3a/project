@@ -18,35 +18,27 @@ async function getUsers(req, res) {
 
 async function createUser(req, res) {
     try {
-        const {
-            photo,
-            name,
-            surname,
-            address,
-            phone,
-            email,
-            nickName,
-            password,
-            information
-        } = req.body;
+        const userData = { ...req.body }
+
+        const { photo, name, surname, address, phone, email, nickName, password, information} = userData
 
         const userSchema = joi.object({
-            photo: joi.string().required(),
-            name: joi.string().required(),
-            surname: joi.string().required(),
-            address: joi.string().required(),
-            phone: joi.number().required(),
-            email: joi.string().email().required(),
-            nickName: joi.string().required(),
-            password: joi.string().min(6).max(20).required(),
+            photo: joi.string(),
+            name: joi.string(),
+            surname: joi.string(),
+            address: joi.string(),
+            phone: joi.number(),
+            email: joi.string().email(),
+            nickName: joi.string(),
+            password: joi.string().min(6).max(20),
             information: joi.string().max(1000)
         });
 
-        await userSchema.validateAsync({ photo, name, surname, address, photo, phone, email, nickName, password, information });
+        await userSchema.validateAsync({ photo, name, surname, address, phone, email, nickName, password, information });
 
         const query = 'SELECT * FROM user WHERE email =?';
         const [users] = await dataBase.pool.query(query, email);
-
+        console.log(users);
         if (users.length) {
             const err = new Error('Already exist an user with that email');
             err.code = 409;
@@ -61,10 +53,10 @@ async function createUser(req, res) {
 
         const passwordHash = await bcrypt.hash(password, 10);
 
-        const insertQuery = 'INSERT INTO user (photo, name, surname, address, phone, email, nick_name, password, information) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
+        const insertQuery = 'INSERT INTO user SET ?';
         
-        const [insertRows] = await dataBase.pool.query(insertQuery, [photo, name, surname, address, phone, email, nickName, passwordHash, information]);
-
+        const [insertRows] = await dataBase.pool.query(insertQuery, userData);
+        console.log(insertRows);
         const createId = insertRows.insertId;
 
         const selectQuery = 'SELECT * FROM user WHERE id = ?';
@@ -126,7 +118,7 @@ async function login(req, res) {
 async function editUser(req, res) {
     try {
         const { id } = req.params;
-        
+
         const {
             photo,
             name,

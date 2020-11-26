@@ -1,0 +1,287 @@
+{
+	"info": {
+		"_postman_id": "a8d3c95f-f4c4-4685-9037-6a1d72235909",
+		"name": "poject",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "getUsers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/users/getUsers",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"getUsers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createUser",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"photo\": \"aqui va mi foto\",\n    \"name\": \"Andrés\",\n    \"surname\": \"Sainz\",\n    \"address\": \"mi dirección\",\n    \"phone\": 5555555555,\n    \"email\": \"andres@mail.com\",\n    \"nickName\": \"Jon Ander\",\n    \"password\": \"password de Jon\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d889553f-2639-4f72-a17f-b65ad3daff83",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"photo\": \"aqui va la foto\",\n    \"name\": \"andres\",\n    \"surname\": \"sainz\",\n    \"address\": \"mi direccion\",\n    \"phone\": 555555555,\n    \"email\": \"andres@mail.com\",\n    \"nickName\": \"Jon Ander\",\n    \"password\": \"password de Jon\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/users/createUser",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"createUser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "editUser",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/users/editUser",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"editUser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "userEvaluateUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/userEvaluateUser",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"userEvaluateUser"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Apartments",
+			"item": [
+				{
+					"name": "getApartments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/apartment/getApartments",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"apartment",
+								"getApartments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createApartment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"photo\": \"aquí va la ruta de la foto\",\n    \"location\": \"aquí va la dirección\",\n    \"rooms\": 3,\n    \"bathroom\": 2,\n    \"lift\": true,\n    \"balcony\": true,\n    \"heating\": true,\n    \"furniture\": true,\n    \"internet\": true,\n    \"tv\": true,\n    \"price\": 600\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/apartments/createApartment",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"apartments",
+								"createApartment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "searchApartment",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/searchApartment",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"searchApartment"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Evaluates",
+			"item": [
+				{
+					"name": "userEvaluateUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "'este usuario es excelente!!!\n4",
+							"options": {
+								"raw": {
+									"language": "text"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/userEvaluateUser",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"userEvaluateUser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getEvaluateByUserId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/evaluate/getEvaluateByUserId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"evaluate",
+								"getEvaluateByUserId"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
