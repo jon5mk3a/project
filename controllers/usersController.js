@@ -11,7 +11,7 @@ async function getUsers(req, res) {
         res.send(users);
 
     } catch (err) {
-        res.status(500);
+        res.status(res.satus || 500);
         res.send({ error: err.message });
     };
 };
@@ -52,6 +52,8 @@ async function createUser(req, res) {
         };
 
         const passwordHash = await bcrypt.hash(password, 10);
+
+        userData.password = passwordHash;
 
         const insertQuery = 'INSERT INTO user SET ?';
         
