@@ -48,7 +48,7 @@ async function getEvaluateByUserId(req, res) {
             throw error;
         };
 
-        const query = 'SELECT * FROM comments WHERE user_id';
+        const query = 'SELECT * FROM evaluate WHERE user_id';
     
         const [evaluates] = await dataBase.pool.query(query, userId);
         
