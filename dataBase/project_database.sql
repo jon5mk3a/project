@@ -50,6 +50,8 @@ create table if not exists user_apartment_book (
 
 create table if not exists evaluate (
 	id bigint unsigned primary key auto_increment,
+    id_user bigint unsigned,
+    id_user_eval bigint unsigned,
     text varchar(1000),
     rating int not null
 );
