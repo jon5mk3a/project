@@ -22,7 +22,7 @@ app.use(bodyParser.json());
 app.get('/api/users/getUsers', usersController.getUsers);
 app.post('/api/users/createUser', usersController.createUser);
 app.post('/api/users/login', usersController.login);
-app.put('/api/users/editUser', validateAuthorization, usersController.editUser);
+app.put('/api/users/:id/editUser', validateAuthorization, usersController.editUser);
 
 // Apartments
 app.get('/api/apartments/getApartments', apartmentsController.getApartments);
@@ -30,7 +30,7 @@ app.post('/api/apartments/createApartment', validateAuthorization, apartmentsCon
 app.get('/api/searchApartment', apartmentsController.searchApartment);
 
 // Evaluate
-app.post('/api/evaluate/userEvaluateUser', validateAuthorization, evaluatesController.userEvaluateUser);
+app.post('/api/evaluate/:id/userEvaluateUser', validateAuthorization, evaluatesController.userEvaluateUser);
 app.get('/api/evaluate/getEvaluateByUserId', validateAuthorization, evaluatesController.getEvaluateByUserId);
 
 app.listen(HTTP_PORT, () => console.log(`Listening at port: ${HTTP_PORT}`));

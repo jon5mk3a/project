@@ -3,7 +3,6 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const { dataBase } = require('../infraestructure');
-//const { validateAuthorization } = require('../middlewares/validateAuth');
 
 async function getUsers(req, res) {
     try {
@@ -18,9 +17,9 @@ async function getUsers(req, res) {
 
 async function createUser(req, res) {
     try {
-        const userData = { ...req.body }
+        const userData = req.body
 
-        const { photo, name, surname, address, phone, email, nickName, password, information} = userData
+        const { photo, name, surname, address, phone, email, nick_name, password, information} = userData
 
         const userSchema = joi.object({
             photo: joi.string(),
@@ -29,25 +28,21 @@ async function createUser(req, res) {
             address: joi.string().required(),
             phone: joi.number().required(),
             email: joi.string().email().required(),
-            nickName: joi.string().required(),
+            nick_name: joi.string().required(),
             password: joi.string().min(6).max(20).required(),
             information: joi.string().max(1000)
         });
 
-        await userSchema.validateAsync({ photo, name, surname, address, phone, email, nickName, password, information });
+        await userSchema.validateAsync({ photo, name, surname, address, phone, email, nick_name, password, information });
+        
 
-        const query = 'SELECT * FROM user WHERE email =?';
-        const [users] = await dataBase.pool.query(query, email);
-        console.log(users);
+        const query = 'SELECT * FROM user WHERE email = ? OR nick_name = ?';
+        const [users] = await dataBase.pool.query(query, [email, nick_name]);
+
         if (users.length) {
-            const err = new Error('Already exist an user with that email');
-            err.code = 409;
-            throw err;
-        };
 
-        if (nickName.length) {
-            const err = new Error('Already exist an user with that nickname');
-            err.code = 409;
+            const err = new Error('Already exist an user with that email or that nickname');
+            err.httpCode = 400;
             throw err;
         };
 
@@ -57,41 +52,40 @@ async function createUser(req, res) {
 
         const insertQuery = 'INSERT INTO user SET ?';
         
-        const [insertRows] = await dataBase.pool.query(insertQuery, userData);
-
+        const [insertRows] = await dataBase.pool.query(insertQuery, [userData]);
+        
         const createId = insertRows.insertId;
 
         const selectQuery = 'SELECT * FROM user WHERE id = ?';
         
-        const [selectRows] = await dataBase.pool.query(selectQuery, createId);
+        const [selectRows] = await dataBase.pool.query(selectQuery, [createId]);
 
         res.send(selectRows[0]);
 
     } catch (err) {
-        res.status(err.code || 500);
-        res.send({ error: err.message });
+        //res.status(err.code || 500);
+        res.status(err.httpCode || 500).send({ error: err.message });
     };
 };
 
 async function login(req, res) {
     try {
-        const { email, nickName, password } = req.body;
+        const { nick_name, password } = req.body;
 
         const schema = joi.object({
-            email: joi.string().email().required(),
-            nickName: joi.string().min(6).max(20).required(),
+            nick_name: joi.string().min(6).max(20).required(),
             password: joi.string().min(6).max(20).required()
         });
 
-        await schema.validateAsync({ email, nickName, password });
+        await schema.validateAsync({ nick_name, password });
 
-        const query = 'SELECT * FROM user WHERE email = ? OR nickName = ?';
+        const query = 'SELECT * FROM user WHERE nick_name = ?';
 
-        const [rows] = await dataBase.pool.query(query, email, nickName);
+        const [rows] = await dataBase.pool.query(query, [nick_name]);
 
         if (!rows || !rows.length) {
             const error = new Error('That user do not exist');
-            error.code = 401;
+            error.httpCode = 401;
             throw error;
         };
 
@@ -101,18 +95,18 @@ async function login(req, res) {
 
         if (!isValidPassword) {
             const error = new Error('Invalid password');
-            error.code = 401;
+            error.httpCode = 401;
             throw error;
         };
 
         const tokenPayload = { id: user.id };
 
-        const token = jwt.sign(tokenPayload, process.env.JWT_SECRET, { expiresIn: '1d' });
+        const token = jwt.sign(tokenPayload, process.env.JWT_SECRET, { expiresIn: '30d' });
 
-        res.header({ Authorization: 'Bearer ' + token }).send({ token });
+        res.send({ token });
 
     } catch (err) {
-        res.status(err.code || 500);
+        res.status(err.httpCode || 500);
         res.send({ error: err.message });
     };
 };
@@ -120,7 +114,13 @@ async function login(req, res) {
 async function editUser(req, res) {
     try {
         const { id } = req.params;
-
+      
+        if (Number(id) !== req.auth.id) {
+            const err = new Error('You do not have permissions to edit this user');
+            err.httpCode = 403;
+            throw err;
+        }
+        // Pendiente de validar password!!!
         const {
             photo,
             name,
@@ -128,8 +128,7 @@ async function editUser(req, res) {
             address,
             phone,
             email,
-            nickName,
-            password,
+            nick_name,
             information
         } = req.body;
 
@@ -140,16 +139,15 @@ async function editUser(req, res) {
             address: joi.string(),
             phone: joi.number(),
             email: joi.string().email(),
-            nickName: joi.string(),
-            password: joi.string().min(6).max(20),
+            nick_name: joi.string(),
             information: joi.string().max(1000)
         });
 
-        await schema.validateAsync({ photo, name, surname, address, phone, email, nickName, password, information });
+        await schema.validateAsync({ photo, name, surname, address, phone, email, nick_name, information });
 
-        const updateQuery = ('UPDATE user SET photo = ?, name = ?, surname = ?, address = ?, phone = ?, email = ?, nickName = ?, password = ?, information = ? WHERE id = ?');
+        const updateQuery = 'UPDATE user SET photo = ?, name = ?, surname = ?, address = ?, phone = ?, email = ?, nick_name = ?, information = ? WHERE id = ?';
 
-        await dataBase.pool.query(updateQuery, [photo, name, surname, address, phone, email, nickName, password, information, id]);
+        await dataBase.pool.query(updateQuery, [photo, name, surname, address, phone, email, nick_name, information, id]);
 
         const selectQuery = 'SELECT * FROM user WHERE id = ?';
 
@@ -158,7 +156,7 @@ async function editUser(req, res) {
         res.send(selectRows[0]);
 
     } catch (err) {
-        res.status(err.code || 500);
+        res.status(err.httpCode || 500);
         res.send({ error: err.message });
     };
 };

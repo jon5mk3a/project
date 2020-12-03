@@ -8,21 +8,21 @@ async function validateAuthorization(req, res, next) {
 
         if (!authorization || !authorization.startsWith('Bearer ')) {
             const error = new Error('Authorization header required');
-            error.code = 401;
+            error.httpCode = 401;
             throw error;
         };
 
         const token = authorization.slice(7, authorization.length);
 
         const decodeToken = jwt.verify(token, process.env.JWT_SECRET);
-
+        console.log(decodeToken);
         const query = 'SELECT * FROM user WHERE id = ?';
 
-        const [user] = await dataBase.pool.query(query, decodeToken.id);
+        const [user] = await dataBase.pool.query(query, [decodeToken.id]);
 
         if (!user || !user.length) {
             const error = new Error('The user do not exist');
-            err.code = 401;
+            err.httpCode = 401;
             throw error;
         };
 
@@ -30,7 +30,7 @@ async function validateAuthorization(req, res, next) {
         next();
 
     } catch (err) {
-        res.status(err.code || 500);
+        res.status(err.httpCode || 500);
         res.send({ error: err.message });
     };
 };

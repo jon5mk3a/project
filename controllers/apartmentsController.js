@@ -6,7 +6,7 @@ async function getApartments(req, res) {
         const [apartments] = await dataBase.pool.query('SELECT * FROM apartment');
         res.send(apartments);
     } catch (err) {
-        res.status(err.code || 500);
+        res.status(err.httpCode || 500);
         res.send({ error: err.message });
     };
 };
@@ -45,11 +45,11 @@ async function createApartment(req, res) {
 
         const query = 'SELECT * FROM apartment WHERE location = ?';
         
-        const [apartment] = await dataBase.pool.query(query, location);
+        const [apartment] = await dataBase.pool.query(query, [location]);
 
         if (apartment.length) {
             const err = new Error('Already exist an apartment with that location');
-            err.code = 409;
+            err.httpCode = 409;
             throw err;
         };
 
@@ -61,12 +61,12 @@ async function createApartment(req, res) {
 
         const selectQuery = 'SELECT * FROM apartment WHERE id = ?';
         
-        const [selectRows] = await dataBase.pool.query(selectQuery, createId);
+        const [selectRows] = await dataBase.pool.query(selectQuery, [createId]);
 
         res.send(selectRows[0]);
 
     } catch (err) {
-        res.status(err.code || 500);
+        res.status(err.httpCode || 500);
         res.send({ error: err.message });
     };
 };
@@ -87,12 +87,12 @@ async function searchApartment(req, res) {
         
         const selectQuery = ('SELECT id FROM apartment WHERE location = ? OR price = ? OR roomsNumber = ? OR date = ?');
         
-        const [selectRows] = await dataBase.pool.query(selectQuery, id)
+        const [selectRows] = await dataBase.pool.query(selectQuery, [id])
 
         res.send(selectRows[0]);
 
     } catch (err) {
-        res.status(err.code || 500);
+        res.status(err.httpCode || 500);
         res.send({ error: err.message });
     };
 };
