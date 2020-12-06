@@ -74,18 +74,18 @@ async function createApartment(req, res) {
 async function searchApartment(req, res) {
     try {
         const { id } = req.params;
-        const { location, price, roomsNumber, date } = req.body;
+        const { location, price, rooms, date } = req.body;
 
         const schema = joi.object({
             location: joi.string().required(),
             price: joi.number().required(),
-            roomsNumber: joi.number().required(),
+            rooms: joi.number().required(),
             date: joi.date().required()
         });
 
-        await schema.validateAsync({ location, price, roomsNumber, date, id });
+        await schema.validateAsync({ location, price, rooms, date, id });
         
-        const selectQuery = ('SELECT id FROM apartment WHERE location = ? OR price = ? OR roomsNumber = ? OR date = ?');
+        const selectQuery = ('SELECT id FROM apartment WHERE location = ? OR price = ? OR rooms = ? OR date = ?');
         
         const [selectRows] = await dataBase.pool.query(selectQuery, [id])
 
