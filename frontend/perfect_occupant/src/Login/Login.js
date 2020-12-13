@@ -1,18 +1,18 @@
 import { useState } from 'react'
-import { useSetUser } from './UserContext'
-import { login } from './api'
+import { useSetUser } from '../UserContext'
+import { login } from '../api'
 import './Login.css';
 
 function Login() {
     const setMe = useSetUser();
 
-    const [name, setName] = useState('');
+    const [nick_name, setNick_name] = useState('');
     const [password, setPassword] = useState('');
     const [isError, setIsError] = useState(false);
 
-    const handleSubmit = e => {
+    const handleSubmit = async e => {
         e.preventDefault()
-        const data = await login(name, password)
+        const data = await login(nick_name, password)
         if (data.token) {
             setMe(data)
         } else {
@@ -25,9 +25,10 @@ function Login() {
             <form onSubmit={handleSubmit}>
                 <label>
                     Username:
-                    <input value={name} on onChange={e => setName(e.target.value)} />
+                    <input value={nick_name} on onChange={e => setNick_name(e.target.value)} />
                 </label>
                 <label>
+                    Password:
                     <input type='password' value={password} onChange={e => setPassword(e.target.value)} />
                 </label>
                 {isError &&
@@ -36,7 +37,6 @@ function Login() {
                     </div>
                     }
                 <button>Login</button>
-                <div className='note'>Are you sure that you are registered?</div>
             </form>
         </div>
     );

@@ -1,8 +1,7 @@
-import './App.js';
-
 function Home() {
     return(
         <>
+        
         </>
     );
 };
