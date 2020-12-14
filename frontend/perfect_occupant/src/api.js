@@ -4,7 +4,7 @@ export const useUserList = () => useFetch('http://localhost:8080/users')
 export const useUserById = (id) => useFetch('http://localhost:8080/users/' + id)
 
 export const login = async (nick_name, password) => {
-  const ret = await fetch('http://localhost:8080/login', {
+  const ret = await fetch('http://localhost:8080/api/users/login', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ nick_name, password })
@@ -13,18 +13,18 @@ export const login = async (nick_name, password) => {
   return data
 }
 
-export const register = async (nick_name, password, email) => {
-  const ret = await fetch('http://localhost:8080/register', {
+export const register = async (photo, name, surname, address, phone, email, nick_name, password, information) => {
+  const ret = await fetch('http://localhost:8080/api/users/register', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ nick_name, password, email })
+    body: JSON.stringify({ photo, name, surname, address, phone, email, nick_name, password, information })
   })
   const data = await ret.json()
   return data
 }
 
 export const edit = async (token, id, newUser) => {
-  const ret = await fetch('http://localhost:8080/users/' + id, {
+  const ret = await fetch('http://localhost:8080/users/:id/editUser' + id, {
     method: 'PUT',
     headers: {
       'Authorization': 'Bearer ' + token,

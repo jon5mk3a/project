@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import Button from './Button'
+import Button from './Button';
 import './Navbar.css';
-import casa from '../Header/Home.png'
+import casa from './Home.png';
 
 
 function Navbar() {
@@ -32,16 +32,18 @@ function Navbar() {
         <>
             <nav className='navbar'>
                 <div className='navbar-container'>
-                    <Link to='/' className='navbar-logo'>
+                    <div className='navbar-logo'>
+                    <Link to='/' >
                         <img className='img' src={casa}></img>
                         <h1>PERFECT OCCUPANT</h1>
                     </Link>
+                    </div>
                     <div className='menu-icon' onClick={handleClick}>
                         <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
                     </div>
                     <div>
                         <button className='nav-button' onClick={() => setShow(!show)}>
-                            {show ? 'Menu' : 'Menu'}
+                            {show ? '☰' : '☰'}
                         </button>
                         {show &&
                             <ul className={click ? 'nav-menu active' : 'nav-menu'}>
@@ -56,15 +58,15 @@ function Navbar() {
                                     </Link>
                                 </li>
                                 <li className='nav-item'>
-                                    <Link to='Comments' className='nav-links' onClick={closeMobileMenu}>
+                                    <Link to='/comments' className='nav-links' onClick={closeMobileMenu}>
                                         <h2>Comments</h2>
                                     </Link>
                                 </li>
                             </ul>
                         }
                     </div>
-                    {button && <Button butonStyle='btn-sign-up'>Sign Up</Button>}
-                    {button && <Button butonStyle='btn-login'>Login</Button>}
+                    {button && <Button to='/sign-up' butonStyle='btn-sign-up'>Sign Up</Button>}
+                    {button && <Button to='/login' butonStyle='btn-login'>Login</Button>}
                 </div>
             </nav>
         </>

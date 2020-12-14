@@ -1,0 +1,25 @@
+.register {
+    border: 1px solid black;
+    border-radius: 4px;
+    padding: 20px;
+    position: relative;
+    text-align: center;
+    height: 300px;
+    width: 350px;
+}
+
+.register label {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.login .error {
+    color: red;
+    height: 0;
+}
+
+.login button {
+    margin-top: 30px;
+    margin-bottom: 5px;
+}

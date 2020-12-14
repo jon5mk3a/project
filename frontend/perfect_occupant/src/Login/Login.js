@@ -1,14 +1,18 @@
 import { useState } from 'react'
-import { useSetUser } from '../UserContext'
+import { useSetUser, useUser } from '../UserContext'
 import { login } from '../api'
 import './Login.css';
+import { Redirect } from 'react-router-dom';
 
 function Login() {
     const setMe = useSetUser();
+    const me = useUser();
 
     const [nick_name, setNick_name] = useState('');
     const [password, setPassword] = useState('');
     const [isError, setIsError] = useState(false);
+
+    if (me) return <Redirect to='/' />
 
     const handleSubmit = async e => {
         e.preventDefault()

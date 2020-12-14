@@ -1,21 +1,26 @@
 import { useState } from 'react'
-import { useSetUser } from '../UserContext'
+import { useSetUser, useUser } from '../UserContext'
 import { register } from '../api'
 import './Register.css';
+import { Redirect } from 'react-router-dom';
+
 
 function Register() {
   const setMe = useSetUser()
+  const me = useUser();
 
-  const [photo, setPhoto] = useState('')
-  const [name, setName] = useState('')
-  const [surname, setSurname] = useState('')
-  const [address, setAddress] = useState('')
-  const [phone, setPhone] = useState('')
-  const [email, setEmail] = useState('')
-  const [nick_name, setNick_name] = useState('')
-  const [password, setPassword] = useState('')
-  const [information, setInformation] = useState('')
-  const [isError, setError] = useState(false)
+  const [photo, setPhoto] = useState('');
+  const [name, setName] = useState('');
+  const [surname, setSurname] = useState('');
+  const [address, setAddress] = useState('');
+  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
+  const [nick_name, setNick_name] = useState('');
+  const [password, setPassword] = useState('');
+  const [information, setInformation] = useState('');
+  const [isError, setError] = useState(false);
+
+  if (me) return <Redirect to='/' />
 
   const handleSubmit = async e => {
     e.preventDefault()
@@ -28,7 +33,7 @@ function Register() {
   }
 
   return (
-    <div className="login register">
+    <div className="register">
       <form onSubmit={handleSubmit}>
       <label>
           Photo:
