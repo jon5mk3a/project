@@ -1,4 +1,4 @@
-import useFetch from './useFetch'
+import useFetch from './useFetch';
 
 export const useUserList = () => useFetch('http://localhost:8080/users')
 export const useUserById = (id) => useFetch('http://localhost:8080/users/' + id)

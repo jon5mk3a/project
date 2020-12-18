@@ -1,0 +1,49 @@
+.carousel {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  height: 150px;
+  width: 360px;
+  margin: 10px;
+  padding: 20px;
+  position: relative;
+}
+
+.carousel .slides {
+  display: flex;
+  justify-content: space-around;
+}
+
+.carousel .card {
+  background-color: #eee;
+  border: 1px solid #888;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 10px;
+  height: 100px;
+  width: 80px;
+}
+
+.carousel .arrows div {
+  background-color: #5a9abf;
+  border-radius: 100%;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+  text-align: center;
+  line-height: 20px;
+  height: 20px;
+  width: 20px;
+  position: absolute;
+  top: calc(50% - 10px);
+}
+
+.carousel .arrows .arrow-left {
+  left: 6px;
+}
+
+.carousel .arrows .arrow-right {
+  right: 6px;
+}

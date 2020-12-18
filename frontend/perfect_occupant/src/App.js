@@ -1,5 +1,6 @@
 import Navbar from './Home/Navbar';
 import { Switch, Route } from 'react-router-dom';
+import Home from './Home/Home';
 import Login from './Login/Login';
 import Register from './Register/Register';
 import Apartments from './Home/Apartments';
@@ -11,6 +12,7 @@ function App() {
   return (
     <>
       <Navbar />
+      <Home />
       <Switch>
         <Route path='/login'>
           <Login />
@@ -18,7 +20,7 @@ function App() {
         <Route path='/sign-up'>
           <Register />
         </Route>
-        <Route path='apartments'>
+        <Route path='/apartments'>
           <Apartments />
         </Route>
         <Route path='/comments'>

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Button from './Button';
 import './Navbar.css';
-import casa from './Home.png';
+import home from './Home.png';
 
 
 function Navbar() {
@@ -33,15 +33,15 @@ function Navbar() {
             <nav className='navbar'>
                 <div className='navbar-container'>
                     <div className='navbar-logo'>
-                    <Link to='/' >
-                        <img className='img' src={casa}></img>
-                        <h1>PERFECT OCCUPANT</h1>
-                    </Link>
+                        <Link to='/' >
+                            <img className='img-home' alt='home' src={home}></img>
+                            <h1 className='title'>PERFECT OCCUPANT</h1>
+                        </Link>
                     </div>
                     <div className='menu-icon' onClick={handleClick}>
                         <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
                     </div>
-                    <div>
+                    <div className='acordeon'>
                         <button className='nav-button' onClick={() => setShow(!show)}>
                             {show ? '☰' : '☰'}
                         </button>

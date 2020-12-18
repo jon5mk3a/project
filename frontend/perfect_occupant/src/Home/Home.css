@@ -1,0 +1,5 @@
+.img-castle {
+    background-image: url('./Castle.jpg');
+    background-size: cover;
+    height: 1500px;
+}

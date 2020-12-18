@@ -55,7 +55,7 @@ async function createApartment(req, res) {
 
         const insertQuery = 'INSERT INTO apartment (photo, location, rooms, bathroom, lift, balcony, heating, furniture, internet, tv, price) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
         
-        const [insertRows] = await dataBase.pool.query(insertQuery, [photo, photo, location, rooms, bathroom, lift, balcony, heating, furniture, internet, tv, price]);
+        const [insertRows] = await dataBase.pool.query(insertQuery, [photo, location, rooms, bathroom, lift, balcony, heating, furniture, internet, tv, price]);
 
         const createId = insertRows.insertId;
 
@@ -73,21 +73,20 @@ async function createApartment(req, res) {
 
 async function searchApartment(req, res) {
     try {
-        const { id } = req.params;
-        const { location, price, rooms, date } = req.body;
+        //const { id } = req.params;
+        const { location, price, rooms } = req.body;
 
         const schema = joi.object({
-            location: joi.string().required(),
-            price: joi.number().required(),
-            rooms: joi.number().required(),
-            date: joi.date().required()
+            location: joi.string(),
+            price: joi.number(),
+            rooms: joi.number(),
         });
 
-        await schema.validateAsync({ location, price, rooms, date, id });
+        await schema.validateAsync({ location, price, rooms });
         
-        const selectQuery = ('SELECT id FROM apartment WHERE location = ? OR price = ? OR rooms = ? OR date = ?');
+        const selectQuery = ('SELECT * FROM apartment WHERE location = ? OR price = ? OR rooms = ?');
         
-        const [selectRows] = await dataBase.pool.query(selectQuery, [id])
+        const [selectRows] = await dataBase.pool.query(selectQuery, [location, price, rooms])
 
         res.send(selectRows[0]);
 
