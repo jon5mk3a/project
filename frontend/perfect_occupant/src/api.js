@@ -14,7 +14,7 @@ export const login = async (nick_name, password) => {
 }
 
 export const register = async (photo, name, surname, address, phone, email, nick_name, password, information) => {
-  const ret = await fetch('http://localhost:8080/api/users/register', {
+  const ret = await fetch('http://localhost:8080/api/users/createUser', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ photo, name, surname, address, phone, email, nick_name, password, information })

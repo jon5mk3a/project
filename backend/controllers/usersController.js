@@ -1,7 +1,6 @@
 const joi = require('joi');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-
 const { dataBase } = require('../infraestructure');
 
 async function getUsers(req, res) {
@@ -58,9 +57,13 @@ async function createUser(req, res) {
 
         const selectQuery = 'SELECT * FROM user WHERE id = ?';
         
-        const [selectRows] = await dataBase.pool.query(selectQuery, [createId]);
+        const [[user]] = await dataBase.pool.query(selectQuery, [createId]);
 
-        res.send(selectRows[0]);
+        const tokenPayload = { id: user.id };
+
+        const token = jwt.sign(tokenPayload, process.env.JWT_SECRET, { expiresIn: '30d' });
+
+        res.send({ ...user, token });
 
     } catch (err) {
         //res.status(err.code || 500);

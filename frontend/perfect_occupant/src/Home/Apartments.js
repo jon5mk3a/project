@@ -1,5 +1,6 @@
 import useFetch from '../useFetch';
 import ApartmentCard from './ApartmentCard';
+import './Apartments.css';
 
 function Apartments() {
     const apartments = useFetch ('http://localhost:8080/api/apartments/getApartments')

@@ -1,38 +1,38 @@
 function ApartmentCard({ apartment }) {
     return (
-        <div>
-            <div>
+        <div className='apartment-card'>
+            <div className='photo'>
                 {apartment.photo}
             </div>
-            <div>
-                Apartment in {apartment.location}
+            <div className='location'>
+                <h1>Apartment in {apartment.location}</h1>
             </div>
-            <div>
+            <div className='rooms-bathrooms'>
                 with {apartment.rooms} rooms and {apartment.bathroom} bathrooms
             </div>
-            <div>
+            <div className='lift'>
                 Lift: {apartment.lift ? 'yes' : 'no'}
             </div>
-            <div>
+            <div className='balcony'>
                 Balcony: {apartment.balcony ? 'yes' : 'no'}
             </div>
-            <div>
+            <div className='heating'>
                 Heating: {apartment.heating ? 'yes' : 'no'}
             </div>
-            <div>
+            <div className='furniture'>
                 Furniture: {apartment.furniture ? 'yes' : 'no'}
             </div>
-            <div>
+            <div className='internet'>
                 Internet: {apartment.internet ? 'yes' : 'no'}
             </div>
-            <div>
+            <div className='tv'>
                 Tv: {apartment.tv ? 'yes' : 'no'}
             </div>
-            <div>
+            <div className='price'>
                 Price: {apartment.price} €
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default ApartmentCard;

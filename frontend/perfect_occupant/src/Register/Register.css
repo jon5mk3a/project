@@ -1,6 +1,6 @@
 .register {
+    background-color: rgb(30, 30, 125);
     border: 1px solid black;
-    border-radius: 4px;
     padding: 20px;
     position: relative;
     text-align: center;

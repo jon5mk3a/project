@@ -1,3 +1,7 @@
 .apartment-cards {
-    
+    background-color: rgb(30, 30, 125);
+    position: relative;
+    width: 200px;
+    padding: 20px;
+    color: black;
 }

@@ -29,7 +29,7 @@ function Login() {
             <form onSubmit={handleSubmit}>
                 <label>
                     Username:
-                    <input value={nick_name} on onChange={e => setNick_name(e.target.value)} />
+                    <input value={nick_name} onChange={e => setNick_name(e.target.value)} />
                 </label>
                 <label>
                     Password:

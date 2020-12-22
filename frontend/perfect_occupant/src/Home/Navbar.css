@@ -5,6 +5,7 @@
     background-color: rgb(30, 30, 125);
     border-bottom: 5px solid black;
     display: flex;
+    width: 100%;
 }
 
 .navbar .navbar-container {
@@ -56,17 +57,45 @@
 
 .navbar .title {
     font-family: 'Caveat';
+    text-shadow: 20px -15px 5px black;
     font-weight: bold;
     align-items: center;
     font-size: 80px;
     color:#fff;
     display: flex;
+    padding: 1rem;
+    animation-duration: 1s;
+    animation-name: title;
+}
+
+@keyframes title {
+        from {
+            transform: translateX(-1000px);
+            opacity: 1;
+        }
+        to {
+            transform: translateX(0px);
+            opacity: 1;
+        }
 }
 
 .navbar .img-home {
     height: 100px;
     width: 100px;
     padding: 25px;
+    animation-duration: 3s;
+    animation-name: img-home;
+}
+
+@keyframes img-home {
+    from {
+        transform: translateY(-500px);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(0px);
+        opacity: 1;
+    }
 }
 
 .navbar .nav-links {

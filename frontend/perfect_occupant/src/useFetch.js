@@ -8,13 +8,13 @@ function useFetch(url) {
 
   useEffect(() => {
     fetch(url, {
-      headers: me && { 'Authorization': 'Bearer ' + token }
+      headers: token && { 'Authorization': 'Bearer ' + token }
     })
       .then(res => res.json())
       .then(t => setData(t))
   }, [url, token])
 
   return data
-}
+};
 
 export default useFetch;

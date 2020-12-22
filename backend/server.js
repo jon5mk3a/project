@@ -8,7 +8,8 @@ const app = express();
 const {
     usersController,
     apartmentsController,
-    evaluatesController
+    evaluatesController,
+    booksController
 } = require('./controllers');
 
 const { validateAuthorization } = require('./middlewares');
@@ -35,5 +36,9 @@ app.get('/api/searchApartment', apartmentsController.searchApartment);
 // Evaluate
 app.post('/api/evaluate/:id/userEvaluateUser', validateAuthorization, evaluatesController.userEvaluateUser);
 app.get('/api/evaluate/getEvaluateByUserId', validateAuthorization, evaluatesController.getEvaluateByUserId);
+
+//Books
+app.get('/api/userApartmentRequest/books', booksController.getBooks);
+//app.post('/api/userApartmentRequest/books', booksController.doBooks);
 
 app.listen(HTTP_PORT, () => console.log(`Listening at port: ${HTTP_PORT}`));
