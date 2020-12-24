@@ -2,7 +2,7 @@ function ApartmentCard({ apartment }) {
     return (
         <div className='apartment-card'>
             <div className='photo'>
-                {apartment.photo}
+                <img src={apartment.photo} />
             </div>
             <div className='location'>
                 <h1>Apartment in {apartment.location}</h1>

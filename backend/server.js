@@ -3,6 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const morgan = require('morgan');
+const fileUpload = require('express-fileupload');
 const app = express();
 
 const {
@@ -22,6 +23,8 @@ app.use(bodyParser.json());
 
 app.use(cors());
 
+app.use(fileUpload());
+
 // Users
 app.get('/api/users/getUsers', usersController.getUsers);
 app.post('/api/users/createUser', usersController.createUser);
@@ -40,5 +43,17 @@ app.get('/api/evaluate/getEvaluateByUserId', validateAuthorization, evaluatesCon
 //Books
 app.get('/api/userApartmentRequest/books', booksController.getBooks);
 //app.post('/api/userApartmentRequest/books', booksController.doBooks);
+
+// Uploads
+app.post('/api/uploads', (req, res) => {
+    EDfile.mv(`./uploads/${EDfile.name}`, err => {
+        const EDfile = req.files.file
+        if (err) return res.status(500).send({ error: err.message})
+        return res.status(200).send({ message: 'Upload file' })
+    });
+});
+
+//app.put('/users/me', upload.single('avatar'), controller.updateProfile)
+app.use('/static', express.static('uploads'))
 
 app.listen(HTTP_PORT, () => console.log(`Listening at port: ${HTTP_PORT}`));
