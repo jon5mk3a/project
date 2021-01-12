@@ -1,3 +1,6 @@
-.apartment-card {
-    display: flex;
+
+.apartment-card .photo {
+    max-width: 50px;
+    max-height: 50px;
+    background-size: contain;
 }

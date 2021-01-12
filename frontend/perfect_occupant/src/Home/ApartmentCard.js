@@ -1,3 +1,5 @@
+import './ApartmentsCard.css'
+
 function ApartmentCard({ apartment }) {
     return (
         <div className='apartment-card'>
