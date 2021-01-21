@@ -1,5 +1,6 @@
-#root {
+/* #root {
     background-image: url('./Castle.jpg');
     background-size: cover;
-    height: 1500px;
-}
+    background-attachment: fixed;
+    height: 100vh;
+} */

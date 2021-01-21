@@ -4,7 +4,7 @@ function ApartmentCard({ apartment }) {
     return (
         <div className='apartment-card'>
             <div className='photo'>
-                <img src={apartment.photo} />
+                <img className='img' src={apartment.photo} />
             </div>
             <div className='location'>
                 <h1>Apartment in {apartment.location}</h1>
@@ -32,6 +32,8 @@ function ApartmentCard({ apartment }) {
             </div>
             <div className='price'>
                 Price: {apartment.price} €
+            </div>
+            <div className='space'>
             </div>
         </div>
     );
